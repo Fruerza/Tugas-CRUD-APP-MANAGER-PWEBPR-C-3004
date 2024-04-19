@@ -174,7 +174,5 @@
 </div>
 
   <script src="crud.js"></script>
-
-
 </body>
 </html>
