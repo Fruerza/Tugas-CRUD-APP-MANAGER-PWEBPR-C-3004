@@ -1,5 +1,5 @@
 <?php
-include "koneksi.php";
+require_once'course.php';
 
 if(isset($_POST["tambah_guru"])){
 
@@ -12,9 +12,9 @@ if(isset($_POST["tambah_guru"])){
     }
     else {
         $query = "INSERT INTO guru(no_hp, nama_guru) VALUES ('$nhp', '$nguru')";
-        $hasil = mysqli_query($con,$query);
+        $hasil = mysqli_query($conn,$query);
         if(!$hasil){
-            die("Failed to insert".mysqli_error());
+            die("Failed to insert".mysqli_error($conn));
         }
 
         else{
@@ -23,4 +23,4 @@ if(isset($_POST["tambah_guru"])){
     }
     
 }
-?>
+

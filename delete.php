@@ -1,18 +1,19 @@
-<?php include("koneksi.php");?>
+<?php include ('koneksi.php');?>
 
-<?php
+<?php 
 
-if(isset($_GET["id_guru"])){
-    $id_Guru = $_GET["id_guru"];
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
 
-    $query = "DELETE FROM guru WHERE id_guru = $id_Guru";
+        $query = "DELETE FROM guru WHERE id_guru = '$id'";
+        $result = mysqli_query($con, $query);
 
-    $result = mysqli_query($con, $query);
 
-    if(!$result){
-        die("Query failed: " . mysqli_error($con));
-    }else{
-        header('location:dashboard.php?delete_msg=Data has been deleted.');
+        if(!$result) {
+            die("query failed".mysqli_error($con));
+         } else{
+            header('location:dashboard.php?');
+        }
     }
-}
+
 ?>

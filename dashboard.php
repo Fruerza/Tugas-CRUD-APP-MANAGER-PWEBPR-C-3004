@@ -1,6 +1,9 @@
-<?php include("koneksi.php");?>
-<?php include("insert.php");?>
-<?php include("delete.php");?>
+<?php 
+include("course.php");
+
+$cs = Course::select();
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -88,71 +91,46 @@
           </tr>
         </thead>
         <tbody class="table_data">
-          <?php
-          
-          $query = "SELECT * FROM guru";
 
-          $read = mysqli_query($con, $query);
-
-          if (!$read){
-            die("Pembacaan Gagal".mysqli_error());
-          }else{
-            while($row = mysqli_fetch_assoc($read)){
-          ?>
-
-          <?php
-              if (isset($_GET['delete_msg'])) {
-                echo "<h6>".$_GET['delete_msg']."</h6>";
-               }
-          ?>
-
-
-
+        <?php 
+        foreach ($cs as $row) :
+        ?>
           <tr>
             <td><?php echo $row['id_guru']; ?></td>
             <td><?php echo $row['no_hp']; ?></td>
             <td><?php echo $row['nama_guru']; ?></td>
-            <td><a href='update.php?id=<?php echo $row['id_guru']; ?>' class="btn btn-success">Update</a></td>
-            <td><a href='delete.php?id=<?php echo $row['id_guru']; ?>' class="btn btn-danger">Delete</a></td>
+            <td><button class="update-button" onclick="showPopup(<?php echo $row['id_guru']; ?>, '<?php echo $row['no_hp']; ?>', '<?php echo $row['nama_guru']; ?>')">Update</button></td>
+            <td><a href="delete.php?id=<?php echo $row['id_guru']; ?>" class="btn btn-danger">Delete</a></td>
           </tr>
 
-
-
-
-              <?php
-            }
-
-          }
-          ?>
-
+          <?php endforeach        ?>
               
 
         </tbody>
       </table>
+
+      <?php 
+      if(isset($_GET['delete_msg'])) {
+        echo "<h6>".$_GET['delete_msg']."</h6>";
+      }
+      
+      ?>
       <button class="create">Create</button>
     </div>
   </div>
 
   <div class="popup">
   <div class="form-popup">
-    <form action="dashboard.php" method="post">
+    <form action="insert.php" method="post">
       <label for="no_hp">No HP:</label><br>
       <input type="text" id="no_hp" name="no_hp"><br>
       <label for="nama_guru">Nama Guru:</label><br>
       <input type="text" id="nama_guru" name="nama_guru"><br>
+      <input type="hidden" id="id_guru" name="id_guru">
       <input type="hidden" name="tambah_guru">
       <div class="btn-group">
-      <?php
-      if (isset($_GET['message'])) {
-        echo "<h6>".$_GET['message']."</h6>";
-      }
-      ?>
 
-      <?php
-      if (isset($_GET['insert_msg'])) {
-        echo "<h6>".$_GET['insert_msg']."</h6>";
-      }
-      ?>
+      <a href="">
         <button type="submit" class="btn-submit">Submit</button>
         <button type="button" class="btn-cancel">Cancel</button>
       </div>
@@ -161,7 +139,7 @@
   </div>
 
 
-  <script>
+<script>
   document.querySelector('.create').addEventListener('click', function() {
   document.querySelector('.popup').style.display = 'block';
   });
@@ -169,7 +147,18 @@
   document.querySelector('.btn-cancel').addEventListener('click', function() {
   document.querySelector('.popup').style.display = 'none';
   });
-  </script>
+
+function showPopup(id_guru, no_hp, nama_guru) {
+    document.querySelector('.popup').style.display = 'block';
+    document.getElementById('id_guru').value = id_guru;
+    document.getElementById('no_hp').value = no_hp;
+    document.getElementById('nama_guru').value = nama_guru;
+}
+
+document.querySelector('.btn-cancel').addEventListener('click', function() {
+    document.querySelector('.popup').style.display = 'none';
+});
+</script>
 
 </div>
 
