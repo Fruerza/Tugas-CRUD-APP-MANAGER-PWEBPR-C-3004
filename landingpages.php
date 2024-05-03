@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +12,18 @@
 <body>
     <div class="container">
         <div class="signin-signup">
-            <form action="dashboard.php" class="sign-in-form">
+            <form class="sign-in-form" action="routes.php" method="GET">
                 <h2 class="title">Sign in</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
+                    <input type="text" name="route" value="index" style="display: none;">
                     <input type="text" placeholder="Username">
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Password">
                 </div>
-                <a href="dashboard.php"><input type="submit" value="Login" class="btn"></a>
+                <button type="submit" class="btn">Login</button>
                 <p class="social-text">Masuk Dengan Akun Sosial</p>
                 <div class="social-media">
                     <a href="#" class="social-icon">

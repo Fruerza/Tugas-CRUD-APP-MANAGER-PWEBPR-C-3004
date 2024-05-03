@@ -1,8 +1,12 @@
 <?php 
 include("course.php");
 
-$cs = Course::select();
-
+$query = "SELECT * FROM guru";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$result = $stmt->get_result();
+$cs = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -86,8 +90,9 @@ $cs = Course::select();
             <th scope="col">id</th>
             <th scope="col">No_Hp</th>
             <th scope="col">Nama_Guru</th>
-            <th scope="col">Update</th>
+            <th scope="col">Foto</th>
             <th scope="col">Delete</th>
+            <th scope="col">Update</th>
           </tr>
         </thead>
         <tbody class="table_data">
@@ -99,11 +104,30 @@ $cs = Course::select();
             <td><?php echo $row['id_guru']; ?></td>
             <td><?php echo $row['no_hp']; ?></td>
             <td><?php echo $row['nama_guru']; ?></td>
-            <td><button class="update-button" onclick="showPopup(<?php echo $row['id_guru']; ?>, '<?php echo $row['no_hp']; ?>', '<?php echo $row['nama_guru']; ?>')">Update</button></td>
-            <td><a href="delete.php?id=<?php echo $row['id_guru']; ?>" class="btn btn-danger">Delete</a></td>
+            <td><img src="uploads/<?php echo $row['gambar']; ?>" alt="" width="50" height="50"></td>
+            
+            <td><a href="routes.php?route=delete&id=<?php echo $row['id_guru']; ?>" class="btn btn-danger">Delete</a></td>
+            <td><button class="update-button" onclick="showUpdateForm('<?php echo $row['id_guru']; ?>')">Update</button>
+    <div class="update-form" id="update-form-<?php echo $row['id_guru']; ?>" style="display: none;">
+        <form action="routes.php?route=update&id=<?php echo $row['id_guru']; ?>" method="post" enctype="multipart/form-data">
+            <label for="no_hp_update_<?php echo $row['id_guru']; ?>">No HP:</label><br>
+            <input type="text" id="no_hp_update_<?php echo $row['id_guru']; ?>" name="no_hp" value="<?php echo htmlspecialchars($row['no_hp']); ?>"><br>
+            <label for="nama_guru_update_<?php echo $row['id_guru']; ?>">Nama Guru:</label><br>
+            <input type="text" id="nama_guru_update_<?php echo $row['id_guru']; ?>" name="nama_guru" value="<?php echo htmlspecialchars($row['nama_guru']); ?>"><br>
+            <label for="gambar_update_<?php echo $row['id_guru']; ?>">Gambar:</label><br>
+            <input type="file" id="gambar_update_<?php echo $row['id_guru']; ?>" name="gambar"><br>
+            <input type="hidden" name="update_guru">
+            <div class="btn-group">
+                <button type="submit" class="btn-submit">Update</button>
+                <button type="button" class="btn-cancel" onclick="hideUpdateForm('<?php echo $row['id_guru']; ?>')">Cancel</button>
+            </div>
+        </form>
+    </div>
+</td>
+
           </tr>
 
-          <?php endforeach        ?>
+          <?php endforeach?>
               
 
         </tbody>
@@ -111,22 +135,25 @@ $cs = Course::select();
 
       <?php 
       if(isset($_GET['delete_msg'])) {
-        echo "<h6>".$_GET['delete_msg']."</h6>";
+        echo "<h6>".htmlspecialchars($_GET['delete_msg'])."</h6>";
       }
       
       ?>
-      <button class="create">Create</button>
+      <button class="create"><a href="routes.php?route=create" style="text-decoration: none; color: inherit;">Create</a></button>
+
     </div>
   </div>
 
-  <div class="popup">
+  <!-- <div class="popup">
   <div class="form-popup">
-    <form action="insert.php" method="post">
+    <form action="insert.php" method="post" enctype="multipart/form-data">
       <label for="no_hp">No HP:</label><br>
       <input type="text" id="no_hp" name="no_hp"><br>
       <label for="nama_guru">Nama Guru:</label><br>
       <input type="text" id="nama_guru" name="nama_guru"><br>
       <input type="hidden" id="id_guru" name="id_guru">
+      <label for="gambar">Gambar:</label><br>
+      <input type="file" id="gambar" name="gambar"><br>
       <input type="hidden" name="tambah_guru">
       <div class="btn-group">
 
@@ -136,7 +163,7 @@ $cs = Course::select();
       </div>
     </form>
   </div>
-  </div>
+  </div> -->
 
 
 <script>
@@ -144,16 +171,33 @@ $cs = Course::select();
   document.querySelector('.popup').style.display = 'block';
   });
 
+    function showUpdateForm(id_guru) {
+        var updateForm = document.getElementById('update-form-' + id_guru);
+        if (updateForm) {
+            updateForm.style.display = 'block';
+        }
+    }
+
+    function deleteSuccess() {
+        alert("Data berhasil dihapus.");
+    }
+
+    function updateSuccess() {
+        alert("Data berhasil diperbarui.");
+    }
+
+
+    function hideUpdateForm(id_guru) {
+        var updateForm = document.getElementById('update-form-' + id_guru);
+        if (updateForm) {
+            updateForm.style.display = 'none';
+        }
+    }
+
+
   document.querySelector('.btn-cancel').addEventListener('click', function() {
   document.querySelector('.popup').style.display = 'none';
   });
-
-function showPopup(id_guru, no_hp, nama_guru) {
-    document.querySelector('.popup').style.display = 'block';
-    document.getElementById('id_guru').value = id_guru;
-    document.getElementById('no_hp').value = no_hp;
-    document.getElementById('nama_guru').value = nama_guru;
-}
 
 document.querySelector('.btn-cancel').addEventListener('click', function() {
     document.querySelector('.popup').style.display = 'none';

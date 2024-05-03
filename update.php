@@ -1,23 +1,29 @@
+<?php require_once('koneksi.php'); ?>
+
 <?php
-include("koneksi.php");
-
-if(isset($_GET['id'])) {
+if(isset($_POST['update_guru'])) {
     $id_guru = $_GET['id'];
+    $no_hp_baru = $_POST['no_hp'];
+    $nama_guru_baru = $_POST['nama_guru'];
+    $gambar_baru = $_FILES["gambar"]["name"];
+    $lokasi = $_FILES["gambar"]["tmp_name"];
 
-    if(isset($_POST['submit'])) {
-        $no_hp_baru = $_POST['no_hp'];
-        $nama_guru_baru = $_POST['nama_guru'];
+    move_uploaded_file($lokasi, "uploads/" . $gambar_baru);
 
-        $update_query = "UPDATE guru SET no_hp = '$no_hp_baru', nama_guru = '$nama_guru_baru' WHERE id_guru = $id_guru";
-        $update_result = mysqli_query($con, $update_query);
+    $query = "UPDATE guru SET no_hp = ?, nama_guru = ?, gambar = ? WHERE id_guru = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('sssi', $no_hp_baru, $nama_guru_baru, $gambar_baru, $id_guru);
+    $stmt->execute();
 
-        if($update_result) {
-            header("Location: dashboard.php?update_msg=Data berhasil diupdate");
-            exit();
-        } else {
-            echo "Gagal melakukan update: " . mysqli_error($con);
-        }
+    if($stmt->affected_rows > 0) {
+        echo "<script>alert('Data berhasil diupdate.'); window.location.href='routes.php?route=index';</script>";
+        exit();
+    } else {
+        echo "Gagal melakukan update: " . $stmt->error;
     }
+
+    $stmt->close();
 } else {
-    echo "ID guru tidak ditemukan";
+    echo "Tidak ada permintaan update yang valid.";
 }
+?>
