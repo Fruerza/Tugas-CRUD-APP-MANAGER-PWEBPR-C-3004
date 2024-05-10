@@ -1,7 +1,6 @@
 <?php
 require_once 'koneksi.php';
 
-
 if(isset($_POST["tambah_guru"])){
     $no_hp = $_POST["no_hp"];
 
@@ -18,11 +17,11 @@ if(isset($_POST["tambah_guru"])){
     
     
     if (empty($no_hp)) {
-        echo "<script>alert('Tidak boleh kosong');window.location.href='createform.php';</script>";
+        echo "<script>alert('Tidak boleh kosong');window.location.href='routes.php?route=create';</script>";
         exit();
     }
     if (empty($nama_guru)) {
-        echo "<script>alert('Tidak boleh kosong');;window.location.href='createform.php';</script>";
+        echo "<script>alert('Tidak boleh kosong');;window.location.href='routes.php?route=create';</script>";
         exit();
     }
 

@@ -54,7 +54,7 @@ $stmt->close();
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a href="routes.php?route=landing" class="logout">
 					<i class='bx bx-log-out' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -144,26 +144,7 @@ $stmt->close();
     </div>
   </div>
 
-  <!-- <div class="popup">
-  <div class="form-popup">
-    <form action="insert.php" method="post" enctype="multipart/form-data">
-      <label for="no_hp">No HP:</label><br>
-      <input type="text" id="no_hp" name="no_hp"><br>
-      <label for="nama_guru">Nama Guru:</label><br>
-      <input type="text" id="nama_guru" name="nama_guru"><br>
-      <input type="hidden" id="id_guru" name="id_guru">
-      <label for="gambar">Gambar:</label><br>
-      <input type="file" id="gambar" name="gambar"><br>
-      <input type="hidden" name="tambah_guru">
-      <div class="btn-group">
 
-      <a href="">
-        <button type="submit" class="btn-submit">Submit</button>
-        <button type="button" class="btn-cancel">Cancel</button>
-      </div>
-    </form>
-  </div>
-  </div> -->
 
 
 <script>
