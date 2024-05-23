@@ -12,55 +12,54 @@
 <body>
     <div class="container">
         <div class="signin-signup">
-<form class="sign-in-form" action="verifikasi.php" method="POST">
-    <h2 class="title">Sign in</h2>
-    <div class="input-field">
-        <i class="fas fa-user"></i>
-        <input type="text" placeholder="Username" name="username" required>
-    </div>
-    <div class="input-field">
-        <i class="fas fa-lock"></i>
-        <input type="password" placeholder="Password" name="password" required>
-    </div>
-    <?php if(isset($_GET['error'])) {
-        echo '<p class="error-message">' . urldecode($_GET['error']) . '</p>';
-    }
-    ?>
-    <input type="hidden" name="login" value="1"> 
-    <button type="submit" class="btn">Login</button>
-    <p class="social-text">Masuk Dengan Akun Sosial</p>
-    <div class="social-media">
-        <a href="#" class="social-icon">
-            <i class="fab fa-facebook"></i>
-        </a>
-        <a href="" class="social-icon">
-            <i class="fab fa-twitter"></i>
-        </a>
-        <a href="" class="social-icon">
-            <i class="fab fa-google"></i>
-        </a>
-        <a href="" class="social-icon">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-    </div>
-    <p class="account-text">Tidak Punya Akun? <a href="#" id="sign-up-btn2">Daftar</a></p>
-
-
-</form>
-            <form action="login.php" method="post" class="sign-up-form">
+            <form class="sign-in-form" action="Controller.php" method="POST">
+                <h2 class="title">Sign in</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" name="username" required>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" name="password" required>
+                </div>
+                <?php if(isset($_GET['error'])) {
+                    echo '<p class="error-message">' . urldecode($_GET['error']) . '</p>';
+                }
+                ?>
+                <input type="hidden" name="login" value="1">
+                <button type="submit" class="btn">Login</button>
+                <p class="social-text">Masuk Dengan Akun Sosial</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <p class="account-text">Tidak Punya Akun? <a href="#" id="sign-up-btn2">Daftar</a></p>
+            </form>
+            <form action="Controller.php" method="post" class="sign-up-form">
                 <h2 class="title">Daftar Akun</h2>
                 <div class="input-field">
-                <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" name="username">
-                </div>
-                    <div class="input-field">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" name="password">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Username" name="username" required>
                 </div>
                 <div class="input-field">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Full Name" name="fullname">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Password" name="password" required>
                 </div>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" placeholder="Full Name" name="fullname" required>
+                </div>
+                <input type="hidden" name="register" value="1">
                 <input type="submit" value="Sign up" class="btn">
                 <p class="social-text">Masuk Dengan Akun Sosial</p>
                 <div class="social-media">
